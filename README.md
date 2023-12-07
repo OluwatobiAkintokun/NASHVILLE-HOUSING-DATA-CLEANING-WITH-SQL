@@ -10,7 +10,7 @@ The Nashville Housing dataset contains 19 columns and 56.477 rows. [Download her
 # Data cleaning and transformation
 The data cleaning and transformation were carried out using MSSQL. The following actions were taken to enhance the quality and structure of the data.
 
-(1) Standardize Date Format using CONVERT function.
+(1) I standardized the Date Format using CONVERT function for SaleDate column.
   
 ![image](https://github.com/OluwatobiAkintokun/NASHVILLE-HOUSING-DATA-CLEANING-WITH-SQL/assets/137109080/a0ca583a-d9f2-4d93-9f74-31fcdfd96fce)
 
@@ -38,7 +38,8 @@ The data cleaning and transformation were carried out using MSSQL. The following
 
 (7) New columns were added for Property Address, Sale Date, Owner Address, and unnecessary columns were subsequently removed using the DROP function.
 
-![Uploading image.png…]()
+![image](https://github.com/OluwatobiAkintokun/NASHVILLE-HOUSING-DATA-CLEANING-WITH-SQL/assets/137109080/17c6580b-4a07-426c-83b5-121d7073895e)
+
 
 
 
