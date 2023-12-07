@@ -18,12 +18,7 @@ SELECT PropertyAddress
 FROM NashvilleHousing
 WHERE PropertyAddress is null
 
-SELECT *
-FROM NashvilleHousing
---WHERE PropertyAddress is null
-order by ParcelID
-
--- Join the columns Parcel ID and Property Address to check for NULL 
+-- Join the columns Parcel ID and Property Address to check for NULL values. 
 SELECT a.ParcelID, a.PropertyAddress, b.ParcelID, b.PropertyAddress, ISNULL(a.PropertyAddress,b.PropertyAddress)
 FROM NashvilleHousing a
 JOIN NashvilleHousing b
@@ -31,7 +26,7 @@ ON a.ParcelID = b.ParcelID
 AND a.[UniqueID] <> b.[UniqueID]
 WHERE a.PropertyAddress is null
 
--- Update the columns with NULL values
+-- Update the columns with NULL values using ISNULL function.
 UPDATE a
 SET PropertyAddress = ISNULL(a.PropertyAddress,b.PropertyAddress)
 FROM NashvilleHousing a
@@ -53,7 +48,7 @@ SELECT
 SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) -1) AS Address
 FROM NashvilleHousing
 
--- To split the Property Address into Address and City
+-- To split the Property Address into Address and City, SUBSTRING AND CHARINDEX was used.
 SELECT
 SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) -1) AS Address
 ,SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) +1,LEN(PropertyAddress)) AS Address
@@ -72,7 +67,7 @@ Add PropertySplitCity Nvarchar(250);
 UPDATE NashvilleHousing
 SET PropertySplitCity = SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) +1,LEN(PropertyAddress))
 
---(4) Spliting Owner Address into Individual columns (Address, City and State)
+--(4) Spliting Owner Address into Individual columns (Address, City and State), PARSENAME was used.
 SELECT *
 FROM NashvilleHousing
 
@@ -101,7 +96,7 @@ Add OwnerSplitState Nvarchar(250);
 UPDATE NashvilleHousing
 SET OwnerSplitState = PARSENAME(REPLACE(OwnerAddress, ',', '.') , 1)
 
---(5) Change Y and N to Yes and No in 'Sold as Vacant' field to make it uniformed.
+--(5) The 'SoldAsVacant' field was standardized using a CASE statement, replacing 'Y' with 'Yes' and 'N' with 'No' for uniformity.
 SELECT DISTINCT (SoldAsVacant), COUNT(SoldAsVacant)
 FROM NashvilleHousing
 Group by SoldAsVacant
@@ -122,7 +117,7 @@ SET SoldAsVacant = CASE WHEN SoldAsVacant = 'Y' THEN 'Yes'
       ELSE SoldAsVacant
       END
 
---(6) Remove Duplicates
+--(6) Duplicates were removed using the ROW_NUMBER() function and a Common Table Expression (CTE)
 SELECT *
 FROM NashvilleHousing
 
@@ -164,7 +159,7 @@ SELECT *
 FROM RowNumCTE
 WHERE row_num > 1
 
---(7) Delete unused Columns
+--(7) New columns were added for Property Address, Sale Date, Owner Address, and unnecessary columns were subsequently removed using the DROP function
 SELECT *
 FROM NashvilleHousing
 
